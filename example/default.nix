@@ -68,6 +68,9 @@
   };
 
   programs = {
+    zsh = {
+      enable = true;
+    };
     sway = {
       enable = true;
     };
