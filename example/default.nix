@@ -81,7 +81,7 @@
 
   raspberry-pi-nix = {
     board = "bcm2712";
-    uboot = true;
+    uboot.enable = true;
   };
   hardware = {
     raspberry-pi = {
