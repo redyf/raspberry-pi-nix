@@ -69,12 +69,9 @@
     neovim
   ];
 
-  boot.loader = {
-    systemd-boot.enable = lib.mkForce true;
-  };
   raspberry-pi-nix = {
     board = "bcm2712";
-    uboot.enable = false;
+    uboot.enable = true;
     libcamera-overlay.enable = false;
   };
   hardware = {
