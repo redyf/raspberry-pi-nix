@@ -8,13 +8,6 @@
     root = {
       initialPassword = "root";
     };
-    sonja = {
-      isNormalUser = true;
-      description = "sonja";
-      initialPassword = "123456";
-      shell = pkgs.zsh;
-      extraGroups = ["networkmanager" "wheel" "input" "docker" "kvm" "libvirtd"];
-    };
   };
 
   networking = {
@@ -43,7 +36,7 @@
     };
     xserver = {
       enable = true;
-      displayManager.gdm.enable = false;
+      displayManager.gdm.enable = true;
     };
   };
 
@@ -66,9 +59,6 @@
   };
 
   programs = {
-    zsh = {
-      enable = true;
-    };
     sway = {
       enable = false;
     };
@@ -80,11 +70,12 @@
   ];
 
   boot.loader = {
-    systemd-boot.enable = false;
+    systemd-boot.enable = lib.mkForce true;
   };
   raspberry-pi-nix = {
     board = "bcm2712";
     uboot.enable = false;
+    libcamera-overlay.enable = false;
   };
   hardware = {
     raspberry-pi = {
@@ -104,56 +95,12 @@
           };
         };
         all = {
-          options = {
-            # The firmware will start our u-boot binary rather than a
-            # linux kernel.
-            kernel = {
-              enable = true;
-              value = "kernel.img";
-            };
-            arm_64bit = {
-              enable = true;
-              value = true;
-            };
-            enable_uart = {
-              enable = true;
-              value = true;
-            };
-            avoid_warnings = {
-              enable = true;
-              value = true;
-            };
-            camera_auto_detect = {
-              enable = true;
-              value = true;
-            };
-            display_auto_detect = {
-              enable = true;
-              value = true;
-            };
-            disable_overscan = {
-              enable = true;
-              value = true;
-            };
-          };
           base-dt-params = {
-            BOOT_UART = {
-              value = 1;
+            # enable autoprobing of bluetooth driver
+            # https://github.com/raspberrypi/linux/blob/c8c99191e1419062ac8b668956d19e788865912a/arch/arm/boot/dts/overlays/README#L222-L224
+            krnbt = {
               enable = true;
-            };
-            uart_2ndstage = {
-              value = 1;
-              enable = true;
-            };
-          };
-          dt-overlays = {
-            disable-bt = {
-              enable = true;
-              params = {};
-            };
-            vc4-kms-v3d = {
-              enable = true;
-              params = {};
+              value = "on";
             };
           };
         };
