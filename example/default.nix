@@ -107,6 +107,10 @@
           options = {
             # The firmware will start our u-boot binary rather than a
             # linux kernel.
+            kernel = {
+              enable = true;
+              value = "kernel.img";
+            };
             arm_64bit = {
               enable = true;
               value = true;
