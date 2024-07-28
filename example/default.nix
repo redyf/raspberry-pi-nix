@@ -23,8 +23,8 @@
       wlan0.useDHCP = true;
       eth0.useDHCP = true;
     };
-    networkmanager.enable = true;
-    firewall.enable = true;
+    networkmanager.enable = false;
+    firewall.enable = false;
     enableIPv6 = false;
     # no need to wait interfaces to have an IP to continue booting
     dhcpcd.wait = "background";
@@ -43,7 +43,7 @@
     };
     xserver = {
       enable = true;
-      displayManager.gdm.enable = true;
+      displayManager.gdm.enable = false;
     };
   };
 
@@ -58,11 +58,9 @@
       sandbox = "relaxed";
       substituters = [
         "https://nix-community.cachix.org"
-        "https://hyprland.cachix.org"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
     };
   };
@@ -72,7 +70,7 @@
       enable = true;
     };
     sway = {
-      enable = true;
+      enable = false;
     };
   };
 
@@ -81,7 +79,10 @@
     neovim
   ];
 
-  raspberry-pi-nix.board = "bcm2712";
+  raspberry-pi-nix = {
+    board = "bcm2712";
+    uboot = true;
+  };
   hardware = {
     raspberry-pi = {
       config = {
@@ -94,6 +95,34 @@
           };
         };
         all = {
+          options = {
+            # The firmware will start our u-boot binary rather than a
+            # linux kernel.
+            arm_64bit = {
+              enable = true;
+              value = true;
+            };
+            enable_uart = {
+              enable = true;
+              value = true;
+            };
+            avoid_warnings = {
+              enable = true;
+              value = true;
+            };
+            camera_auto_detect = {
+              enable = true;
+              value = true;
+            };
+            display_auto_detect = {
+              enable = true;
+              value = true;
+            };
+            disable_overscan = {
+              enable = true;
+              value = true;
+            };
+          };
           base-dt-params = {
             BOOT_UART = {
               value = 1;
@@ -106,6 +135,10 @@
           };
           dt-overlays = {
             disable-bt = {
+              enable = true;
+              params = {};
+            };
+            vc4-kms-v3d = {
               enable = true;
               params = {};
             };
