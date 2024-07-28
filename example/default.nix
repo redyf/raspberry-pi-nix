@@ -79,9 +79,12 @@
     neovim
   ];
 
+  boot.loader = {
+    systemd-boot.enable = true;
+  };
   raspberry-pi-nix = {
     board = "bcm2712";
-    uboot.enable = true;
+    uboot.enable = false;
   };
   hardware = {
     raspberry-pi = {
@@ -91,6 +94,12 @@
             vc4-kms-v3d-pi5 = {
               enable = true;
               params = {};
+            };
+          };
+          options = {
+            arm_boost = {
+              enable = false;
+              value = false;
             };
           };
         };
