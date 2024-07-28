@@ -80,7 +80,7 @@
   ];
 
   boot.loader = {
-    systemd-boot.enable = true;
+    systemd-boot.enable = false;
   };
   raspberry-pi-nix = {
     board = "bcm2712";
